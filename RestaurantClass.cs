@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TableReservation
 {
-    public class RestaurantClass
+    public class Restaurant
     {
-        public string n; //name
-        public RestaurantTableClass[] t; // tables
+        public string name {  get; set; }
+        public RestaurantTableClass[] tables { get; set; }
     }
 }

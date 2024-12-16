@@ -16,14 +16,13 @@ namespace TableReservation
         {
             try
             {
-                //перевірка на наявність бронювання
+                
                 if (bookDates.Contains(date))
                 {
                     return false;
                 }
                 else
                 {
-                    //бронювання
                     bookDates.Add(date);
                     return true;
                 }
@@ -37,8 +36,7 @@ namespace TableReservation
 
        
         public bool IsBooked(DateTime dateTime)
-        {
-            
+        { 
             try
             {
                 return bookDates.Contains(dateTime);

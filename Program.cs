@@ -9,12 +9,12 @@ namespace TableReservation
     {
         static void Main(string[] args)
         {
-            ReservationManagerClass m = new ReservationManagerClass();
-            m.AddRestaurantMethod("A", 10);
-            m.AddRestaurantMethod("B", 5);
+            ReservationManager m = new ReservationManager();
+            m.AddRestaurant("A", 10);
+            m.AddRestaurant("B", 5);
 
-            Console.WriteLine(m.BookTable("A", new DateTime(2023, 12, 25), 3)); // True
-            Console.WriteLine(m.BookTable("A", new DateTime(2023, 12, 25), 3)); // False
+            Console.WriteLine(m.ReservationTable("A", new DateTime(2023, 12, 25), 3)); // True
+            Console.WriteLine(m.ReservationTable("A", new DateTime(2023, 12, 25), 3)); // False
         }
     }
 }

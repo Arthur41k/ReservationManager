@@ -6,106 +6,100 @@ using System.Threading.Tasks;
 
 namespace TableReservation
 {
-    public class ReservationManagerClass
+    public class ReservationManager
     {
-            // res
-            public List<Restaurant> res;
+           
+            public List<Restaurant> restaurants;
 
-            public ReservationManagerClass()
-            {
-                res = new List<Restaurant>();
-            }
-
-            // Add Restaurant Method
-            public void AddRestaurantMethod(string n, int t)
+            
+            public void AddRestaurant(string Name, int Tables)
             {
                 try
                 {
-                    Restaurant r = new Restaurant();
-                    r.name = n;
-                    r.tables = new RestaurantTable[t];
-                    for (int i = 0; i < t; i++)
+                    Restaurant restaurant = new Restaurant();
+                    restaurant.name = Name;
+                    restaurant.tables = new RestaurantTable[Tables];
+                    for (int i = 0; i < Tables; i++)
                     {
-                        r.tables[i] = new RestaurantTable();
+                        restaurant.tables[i] = new RestaurantTable();
                     }
-                    res.Add(r);
+                restaurants.Add(restaurant);
                 }
-                catch (Exception ex)
+                catch (Exception IncorrectDataFormat)
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Неправельний формат вказаних даних");
                 }
             }
 
-            // Load Restaurants From
-            // File
-            private void LoadRestaurantsFromFileMethod(string fileP)
+           
+            private void LoadRestaurants(string filePath)
             {
                 try
                 {
-                    string[] ls = File.ReadAllLines(fileP);
-                    foreach (string l in ls)
-                    {
-                        var parts = l.Split(',');
+                    string[] LoadStrings = File.ReadAllLines(filePath);
+                    foreach (string lString in LoadStrings)
+                {
+                        var parts = lString.Split(',');
                         if (parts.Length == 2 && int.TryParse(parts[1], out int tableCount))
                         {
-                            AddRestaurantMethod(parts[0], tableCount);
+                            AddRestaurant(parts[0], tableCount);
                         }
                         else
                         {
-                            Console.WriteLine(l);
+                            Console.WriteLine(lString);
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception FailedReadData)
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Невдалося зчитати дані");
                 }
             }
 
-            //Find All Free Tables
-            public List<string> FindAllFreeTables(DateTime dt)
+            
+            public List<string> FindTables(DateTime dateTime)
             {
                 try
                 {
-                    List<string> free = new List<string>();
-                    foreach (var r in res)
+                    List<string> FreeTables = new List<string>();
+                    foreach (var restaurant in restaurants)
                     {
-                        for (int i = 0; i < r.tables.Length; i++)
+                        for (int i = 0; i < restaurant.tables.Length; i++)
                         {
-                            if (!r.tables[i].IsBooked(dt))
+                            if (!restaurant.tables[i].IsBooked(dateTime))
                             {
-                                free.Add($"{r.name} - Table {i + 1}");
+                            FreeTables.Add($"{restaurant.name} - Table {i + 1}");
                             }
                         }
                     }
-                    return free;
+                    return FreeTables;
                 }
-                catch (Exception ex)
+                catch (Exception TablesIsNotFind)
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Столики не знайдено");
                     return new List<string>();
                 }
             }
 
-            public bool BookTable(string rName, DateTime d, int tNumber)
+            public bool ReservationTable(string restaurantName, DateTime date, int tableNumber)
             {
-                foreach (var r in res)
+                foreach (var r in restaurants)
                 {
-                    if (r.name == rName)
+                    if (r.name == restaurantName)
                     {
-                        if (tNumber < 0 || tNumber >= r.tables.Length)
+                        if (tableNumber < 0 || tableNumber >= r.tables.Length)
                         {
-                            throw new Exception(null); //Invalid table number
+                            throw new Exception(null); 
                         }
 
-                        return r.tables[tNumber].Book(d);
+                        return r.tables[tableNumber].Book(date);
                     }
                 }
 
-                throw new Exception(null); //Restaurant not found
+                throw new Exception(null); 
             }
 
-            public void SortRestaurantsByAvailabilityForUsersMethod(DateTime dt)
+            public void SortRestaurants(DateTime Date)
             {
                 try
                 {
@@ -113,46 +107,46 @@ namespace TableReservation
                     do
                     {
                         swapped = false;
-                        for (int i = 0; i < res.Count - 1; i++)
+                        for (int i = 0; i < restaurants.Count - 1; i++)
                         {
-                            int avTc = CountAvailableTablesForRestaurantClassAndDateTimeMethod(res[i], dt); // available tables current
-                            int avTn = CountAvailableTablesForRestaurantClassAndDateTimeMethod(res[i + 1], dt); // available tables next
+                            int AvailableTabCurrent = CountTables(restaurants[i], Date); 
+                            int AvailableTabNext = CountTables(restaurants[i + 1], Date);
 
-                            if (avTc < avTn)
+                            if (AvailableTabCurrent < AvailableTabNext)
                             {
-                                // Swap restaurants
-                                var temp = res[i];
-                                res[i] = res[i + 1];
-                                res[i + 1] = temp;
+                                
+                                var temp = restaurants[i];
+                                restaurants[i] = restaurants[i + 1];
+                                restaurants[i + 1] = temp;
                                 swapped = true;
                             }
                         }
                     } while (swapped);
                 }
-                catch (Exception ex)
+                catch (Exception FaildSort)
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Невдалося відсортувати ресторани");
                 }
             }
 
-            // count available tables in a restaurant
-            public int CountAvailableTablesForRestaurantClassAndDateTimeMethod(Restaurant r, DateTime dt)
+            
+            public int CountTables(Restaurant restaurant, DateTime date)
             {
                 try
                 {
                     int count = 0;
-                    foreach (var t in r.tables)
+                    foreach (var Table in restaurant.tables)
                     {
-                        if (!t.IsBooked(dt))
+                        if (!Table.IsBooked(date))
                         {
                             count++;
                         }
                     }
                     return count;
                 }
-                catch (Exception ex)
+                catch (Exception FaildSwapped)
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Невдалося підрахувати кількість столів");
                     return 0;
                 }
             }

@@ -9,6 +9,6 @@ namespace TableReservation
     public class Restaurant
     {
         public string name {  get; set; }
-        public RestaurantTableClass[] tables { get; set; }
+        public RestaurantTable[] tables { get; set; }
     }
 }

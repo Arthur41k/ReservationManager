@@ -9,11 +9,11 @@ namespace TableReservation
     public class ReservationManagerClass
     {
             // res
-            public List<RestaurantClass> res;
+            public List<Restaurant> res;
 
             public ReservationManagerClass()
             {
-                res = new List<RestaurantClass>();
+                res = new List<Restaurant>();
             }
 
             // Add Restaurant Method
@@ -21,12 +21,12 @@ namespace TableReservation
             {
                 try
                 {
-                    RestaurantClass r = new RestaurantClass();
-                    r.n = n;
-                    r.t = new RestaurantTableClass[t];
+                    Restaurant r = new Restaurant();
+                    r.name = n;
+                    r.tables = new RestaurantTable[t];
                     for (int i = 0; i < t; i++)
                     {
-                        r.t[i] = new RestaurantTableClass();
+                        r.tables[i] = new RestaurantTable();
                     }
                     res.Add(r);
                 }
@@ -70,11 +70,11 @@ namespace TableReservation
                     List<string> free = new List<string>();
                     foreach (var r in res)
                     {
-                        for (int i = 0; i < r.t.Length; i++)
+                        for (int i = 0; i < r.tables.Length; i++)
                         {
-                            if (!r.t[i].IsBooked(dt))
+                            if (!r.tables[i].IsBooked(dt))
                             {
-                                free.Add($"{r.n} - Table {i + 1}");
+                                free.Add($"{r.name} - Table {i + 1}");
                             }
                         }
                     }
@@ -91,14 +91,14 @@ namespace TableReservation
             {
                 foreach (var r in res)
                 {
-                    if (r.n == rName)
+                    if (r.name == rName)
                     {
-                        if (tNumber < 0 || tNumber >= r.t.Length)
+                        if (tNumber < 0 || tNumber >= r.tables.Length)
                         {
                             throw new Exception(null); //Invalid table number
                         }
 
-                        return r.t[tNumber].Book(d);
+                        return r.tables[tNumber].Book(d);
                     }
                 }
 
@@ -136,12 +136,12 @@ namespace TableReservation
             }
 
             // count available tables in a restaurant
-            public int CountAvailableTablesForRestaurantClassAndDateTimeMethod(RestaurantClass r, DateTime dt)
+            public int CountAvailableTablesForRestaurantClassAndDateTimeMethod(Restaurant r, DateTime dt)
             {
                 try
                 {
                     int count = 0;
-                    foreach (var t in r.t)
+                    foreach (var t in r.tables)
                     {
                         if (!t.IsBooked(dt))
                         {

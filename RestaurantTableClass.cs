@@ -3,43 +3,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TableReservation
 {
-    public class RestaurantTableClass
+    public class RestaurantTable
     {
-        private List<DateTime> bd; //booked dates
+        private List<DateTime> bookDates; 
 
-
-        public RestaurantTableClass()
-        {
-            bd = new List<DateTime>();
-        }
-
-        // book
-        public bool Book(DateTime d)
+        
+        public bool Book(DateTime date)
         {
             try
             {
-                if (bd.Contains(d))
+                //перевірка на наявність бронювання
+                if (bookDates.Contains(date))
                 {
                     return false;
                 }
-                //add to bd
-                bd.Add(d);
-                return true;
+                else
+                {
+                    //бронювання
+                    bookDates.Add(date);
+                    return true;
+                }
             }
-            catch (Exception ex)
+            catch (Exception IncorrectDateFormat)
             {
-                Console.WriteLine("Error");
+                Console.WriteLine("Неправильний формат дати");
                 return false;
             }
         }
 
-        // is booked
-        public bool IsBooked(DateTime d)
+       
+        public bool IsBooked(DateTime dateTime)
         {
-            return bd.Contains(d);
+            
+            try
+            {
+                return bookDates.Contains(dateTime);
+            }
+            catch (Exception IncorrectDateFormat)
+            {
+                Console.WriteLine("Неправильний формат дати");
+                return false;
+            }
         }
     }
 }

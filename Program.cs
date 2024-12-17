@@ -13,8 +13,8 @@ namespace TableReservation
             manager.AddRestaurant("A", 10);
             manager.AddRestaurant("B", 5);
 
-            Console.WriteLine(manager.ReservationTable("A", new DateTime(2023, 12, 25), 3)); // True
-            Console.WriteLine(manager.ReservationTable("A", new DateTime(2023, 12, 25), 3)); // False
+           Console.WriteLine(manager.ReservationTable("A", new DateTime(2023, 12, 25), 3)); // True
+           Console.WriteLine(manager.ReservationTable("A", new DateTime(2023, 12, 25), 3)); // False
         }
     }
 }

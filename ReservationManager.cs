@@ -25,9 +25,9 @@ namespace TableReservation
                     }
                 restaurants.Add(restaurant);
                 }
-                catch (Exception IncorrectDataFormat)
+                catch (Exception exception)
                 {
-                    Console.WriteLine("Неправельний формат вказаних даних");
+                    Console.WriteLine("Невдалося додати ресторан");
                 }
             }
 
@@ -50,7 +50,7 @@ namespace TableReservation
                         }
                     }
                 }
-                catch (Exception FailedReadData)
+                catch (Exception exception)
                 {
                     Console.WriteLine("Невдалося зчитати дані");
                 }
@@ -74,7 +74,7 @@ namespace TableReservation
                     }
                     return FreeTables;
                 }
-                catch (Exception TablesIsNotFind)
+                catch (Exception exception)
                 {
                     Console.WriteLine("Столики не знайдено");
                     return new List<string>();
@@ -123,7 +123,7 @@ namespace TableReservation
                         }
                     } while (swapped);
                 }
-                catch (Exception FaildSort)
+                catch (Exception exception)
                 {
                     Console.WriteLine("Невдалося відсортувати ресторани");
                 }
@@ -144,7 +144,7 @@ namespace TableReservation
                     }
                     return count;
                 }
-                catch (Exception FaildSwapped)
+                catch (Exception exception)
                 {
                     Console.WriteLine("Невдалося підрахувати кількість столів");
                     return 0;

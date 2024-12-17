@@ -27,7 +27,7 @@ namespace TableReservation
                     return true;
                 }
             }
-            catch (Exception IncorrectDateFormat)
+            catch (Exception exception)
             {
                 Console.WriteLine("Неправильний формат дати");
                 return false;
@@ -41,7 +41,7 @@ namespace TableReservation
             {
                 return bookDates.Contains(dateTime);
             }
-            catch (Exception IncorrectDateFormat)
+            catch (Exception exception)
             {
                 Console.WriteLine("Неправильний формат дати");
                 return false;

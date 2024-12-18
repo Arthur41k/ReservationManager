@@ -10,6 +10,6 @@ namespace TableReservation
     {
         
         public string name {  get; set; }
-        public RestaurantTable[] tables {  get; set; }
+        public RestaurantTable[] tables { get; set; }
     }
 }

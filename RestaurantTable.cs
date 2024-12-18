@@ -9,13 +9,13 @@ namespace TableReservation
 {
     public class RestaurantTable
     {
-        private List<DateTime> bookDates; 
+        private List<DateTime> bookDates = new List<DateTime> (); 
 
         
         public bool Book(DateTime date)
         {
-            try
-            {
+           try
+           {
                 
                 if (bookDates.Contains(date))
                 {
@@ -26,12 +26,12 @@ namespace TableReservation
                     bookDates.Add(date);
                     return true;
                 }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine("Неправильний формат дати");
+           }
+           catch (Exception exception)
+           {
+               Console.WriteLine("Неправильний формат дати");
                 return false;
-            }
+           }
         }
 
        

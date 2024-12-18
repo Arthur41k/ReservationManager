@@ -9,7 +9,7 @@ namespace TableReservation
     public class ReservationManager
     {
            
-            public List<Restaurant> restaurants;
+            public List<Restaurant> restaurants = new List<Restaurant>();
 
             
             public void AddRestaurant(string Name, int Tables)
@@ -83,20 +83,20 @@ namespace TableReservation
 
             public bool ReservationTable(string restaurantName, DateTime date, int tableNumber)
             {
-                foreach (var r in restaurants)
+                foreach (var restauran in restaurants)
                 {
-                    if (r.name == restaurantName)
+                    if (restauran.name == restaurantName)
                     {
-                        if (tableNumber < 0 || tableNumber >= r.tables.Length)
+                        if (tableNumber < 0 || tableNumber >= restauran.tables.Length)
                         {
-                            throw new Exception(null); 
+                            throw new Exception("Невірний номер столика"); 
                         }
 
-                        return r.tables[tableNumber].Book(date);
+                        return restauran.tables[tableNumber].Book(date);
                     }
                 }
 
-                throw new Exception(null); 
+                throw new Exception("Невдалося забронювати столик"); 
             }
 
             public void SortRestaurants(DateTime Date)
